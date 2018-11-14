@@ -12,8 +12,10 @@ library(dplyr)
 library(ggplot2)
 library(readxl)
 
+options(scipen=999)
 dat <- read_excel("C:/Users/Custom PC/Desktop/PhD/CPH_738_Olga/h9/Arit+Harvanko+EC+Survey+data.xlsx")
 names(dat)
+
 
 
 ## subset to only those variables we are going to work with
@@ -66,10 +68,20 @@ p + geom_boxplot() +
 
 
 
-q2_fit_1 <- polr(PG.level ~ * edu + age)
+q2_fit_1 <- polr(PG.level ~ edu + age, data = d, Hess = TRUE)
 
+
+summary(q2_fit_1)
+###why does PG level -> VG?
 ```
 
 
+```{R Question 3}
+
+
+ci <- confint(q2_fit_1)
+exp(cbind(OR = coef(q2_fit_1), ci))
+
+```
 
   
